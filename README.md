@@ -95,6 +95,30 @@ explain_why("postgres", "multi-tenant SaaS with row-level security")
 uv run python -m mcpilot.indexer --force
 ```
 
+## Docker
+
+Multi-stage image with the embedding model + DuckDB index baked in — no runtime network dependency.
+
+```bash
+docker build -t mcpilot:0.1.0 .
+docker run --rm -i mcpilot:0.1.0   # stdio transport, for local MCP clients
+```
+
+Wire into Claude Desktop:
+
+```json
+{
+  "mcpServers": {
+    "mcpilot": {
+      "command": "docker",
+      "args": ["run", "--rm", "-i", "mcpilot:0.1.0"]
+    }
+  }
+}
+```
+
+Non-root user (`uid=10001`), pinned Python 3.12, deps resolved from `uv.lock`, model cached under `/app/.hf_cache` with `HF_HUB_OFFLINE=1` at runtime.
+
 ## Stack
 
 Python · FastMCP · DuckDB · sentence-transformers · uv
