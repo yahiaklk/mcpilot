@@ -37,7 +37,7 @@ RUN uv run python -m mcpilot.indexer
 # Runtime — distroless-ish slim base, non-root, offline-by-default
 FROM python:3.12-slim-bookworm AS runtime
 
-ARG VERSION=0.1.0
+ARG VERSION=0.1.1
 LABEL org.opencontainers.image.title="mcpilot" \
       org.opencontainers.image.description="Context-aware MCP server advisor — recommends MCP servers for your project and explains why." \
       org.opencontainers.image.source="https://github.com/yahiaklk/mcpilot" \

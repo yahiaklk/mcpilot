@@ -1,8 +1,23 @@
 [project]
 name = "mcpilot"
-version = "0.1.0"
-description = "Context-aware MCP server advisor — recommends the right MCP servers for your project and explains why"
+version = "0.1.1"
+description = "Context-aware MCP server advisor — recommends the right MCP servers for your project and explains why."
+readme = "README.md"
 requires-python = ">=3.12"
+license = { file = "LICENSE" }
+authors = [{ name = "Yahia Khallouk", email = "yahia.khallouk@gmail.com" }]
+keywords = ["mcp", "model-context-protocol", "claude", "llm", "advisor", "semantic-search", "embeddings", "fastmcp"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Environment :: Console",
+]
 dependencies = [
     "fastmcp>=3.2.0",
     "duckdb>=1.0",
@@ -12,6 +27,15 @@ dependencies = [
     # [tool.uv.sources] below can pin it to the PyTorch CPU index.
     "torch",
 ]
+
+[project.scripts]
+mcpilot = "mcpilot.server:main"
+
+[project.urls]
+Homepage = "https://github.com/yahiaklk/mcpilot"
+Repository = "https://github.com/yahiaklk/mcpilot"
+Issues = "https://github.com/yahiaklk/mcpilot/issues"
+Changelog = "https://github.com/yahiaklk/mcpilot/releases"
 
 [build-system]
 requires = ["hatchling"]

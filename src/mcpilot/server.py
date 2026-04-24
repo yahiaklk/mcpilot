@@ -122,5 +122,10 @@ def explain_why(server_name: str, project_description: str) -> str:
         return _error_response(f"explaining fit for '{server_name}'", e)
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """Entry point for the `mcpilot` console script (see pyproject [project.scripts])."""
     mcp.run()
+
+
+if __name__ == "__main__":
+    main()
