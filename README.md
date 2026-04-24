@@ -1,5 +1,7 @@
 # mcpilot
 
+[![mcpilot MCP server](https://glama.ai/mcp/servers/yahiaklk/mcpilot/badges/card.svg)](https://glama.ai/mcp/servers/yahiaklk/mcpilot)
+
 Context-aware MCP server advisor. Tells you what to install for your specific project — and why.
 
 ## The problem
