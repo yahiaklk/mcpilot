@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+data/mcp_servers.db
+.claude/settings.local.json
+dist/
+*.egg-info/

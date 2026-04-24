@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mcpilot",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": ["run", "python", "-m", "mcpilot.server"],
+      "port": 8000
+    },
+    {
+      "name": "mcpilot-indexer",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": ["run", "python", "-m", "mcpilot.indexer"],
+      "port": null
+    }
+  ]
+}
