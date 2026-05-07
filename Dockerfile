@@ -31,22 +31,22 @@ RUN uv run python -c \
 # Pre-build the DuckDB index from the commit-pinned awesome-mcp-servers README.
 # Shifts the ~30s index build + outbound fetch from first-run to build-time,
 # and makes the resulting image deterministic.
-RUN uv run python -m mcpilot.indexer
+RUN uv run python -m kothar.indexer
 
 
 # Runtime — distroless-ish slim base, non-root, offline-by-default
 FROM python:3.12-slim-bookworm AS runtime
 
-ARG VERSION=0.1.1
-LABEL org.opencontainers.image.title="mcpilot" \
-      org.opencontainers.image.description="Context-aware MCP server advisor — recommends MCP servers for your project and explains why." \
-      org.opencontainers.image.source="https://github.com/yahiaklk/mcpilot" \
-      org.opencontainers.image.documentation="https://github.com/yahiaklk/mcpilot#readme" \
+ARG VERSION=0.3.0
+LABEL org.opencontainers.image.title="kothar" \
+      org.opencontainers.image.description="Context-aware capability advisor — recommends MCP servers, skills, and tools for your goal and explains why." \
+      org.opencontainers.image.source="https://github.com/yahiaklk/kothar" \
+      org.opencontainers.image.documentation="https://github.com/yahiaklk/kothar#readme" \
       org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.version="${VERSION}"
 
-RUN groupadd --system --gid 10001 mcpilot && \
-    useradd  --system --uid 10001 --gid mcpilot --home /app --shell /sbin/nologin mcpilot
+RUN groupadd --system --gid 10001 kothar && \
+    useradd  --system --uid 10001 --gid kothar --home /app --shell /sbin/nologin kothar
 
 WORKDIR /app
 
@@ -58,12 +58,12 @@ ENV PATH="/app/.venv/bin:${PATH}" \
     TRANSFORMERS_OFFLINE=1 \
     HF_HUB_OFFLINE=1
 
-COPY --from=builder --chown=mcpilot:mcpilot /app /app
+COPY --from=builder --chown=kothar:kothar /app /app
 
-USER mcpilot
+USER kothar
 
 # FastMCP default transport is stdio — correct for local MCP clients
 # (Claude Desktop, Claude Code, etc) wiring via `docker run -i`.
 # For remote hosted deployment (e.g. Glama inspector) once server.py accepts
 # a --transport flag, override CMD to: ["--transport", "sse", "--port", "8000"]
-ENTRYPOINT ["python", "-m", "mcpilot.server"]
+ENTRYPOINT ["python", "-m", "kothar.server"]
