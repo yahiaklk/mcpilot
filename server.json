@@ -1,17 +1,17 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.yahiaklk/mcpilot",
-  "description": "Context-aware MCP server advisor — recommends MCP servers for your project and explains why.",
+  "name": "io.github.yahiaklk/kothar",
+  "description": "Context-aware capability advisor — recommends MCP servers, skills, and tools for your goal and explains why.",
   "repository": {
-    "url": "https://github.com/yahiaklk/mcpilot",
+    "url": "https://github.com/yahiaklk/kothar",
     "source": "github"
   },
-  "version": "0.1.2",
+  "version": "0.3.0",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "kothar",
-      "version": "0.1.1",
+      "version": "0.3.0",
       "transport": { "type": "stdio" }
     }
   ]
