@@ -38,7 +38,7 @@ explain_why(server_name, project_description)
 **Prerequisites:** [uv](https://docs.astral.sh/uv/)
 
 ```bash
-git clone https://github.com/yahiaklk/mcpilot
+git clone https://github.com/yahiaklk/kothar
 cd kothar
 uv sync
 ```
