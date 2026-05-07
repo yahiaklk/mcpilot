@@ -1,5 +1,5 @@
 """
-mcpilot — context-aware MCP server advisor.
+kothar — context-aware capability advisor.
 
 Four tools:
   recommend_for_project  — initial stack recommendation for a new project
@@ -7,7 +7,7 @@ Four tools:
   explain_why            — why a specific server fits your project
   recommend_for_goal     — decompose a multi-part goal into sub-queries and recommend per part
 
-Run with: uv run python -m mcpilot.server
+Run with: uv run python -m kothar.server
 """
 
 import re
@@ -16,10 +16,10 @@ import traceback
 
 from fastmcp import FastMCP
 
-from mcpilot.indexer import build_index, is_index_ready
-from mcpilot.search import find_similar, generate_rationale, lookup_by_name
+from kothar.indexer import build_index, is_index_ready
+from kothar.search import find_similar, generate_rationale, lookup_by_name
 
-mcp = FastMCP("mcpilot")
+mcp = FastMCP("kothar")
 
 _index_initialized = False
 
@@ -40,7 +40,7 @@ def _error_response(context: str, exc: Exception) -> str:
         f"## Error while {context}\n\n"
         f"{type(exc).__name__}: {exc}\n\n"
         f"See server logs for details. If this persists, try rebuilding the "
-        f"index with `uv run python -m mcpilot.indexer --force`."
+        f"index with `uv run python -m kothar.indexer --force`."
     )
 
 
@@ -193,7 +193,7 @@ def recommend_for_goal(goal: str, project: str | None = None) -> str:
 
 
 def main() -> None:
-    """Entry point for the `mcpilot` console script (see pyproject [project.scripts])."""
+    """Entry point for the `kothar` console script (see pyproject [project.scripts])."""
     mcp.run()
 
 

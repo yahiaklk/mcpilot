@@ -8,7 +8,7 @@ import sys
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from mcpilot.indexer import MODEL_NAME, get_connection
+from kothar.indexer import MODEL_NAME, get_connection
 
 # Similarity below this is weaker than typical near-miss matches we've measured
 # with all-MiniLM-L6-v2 against the awesome-mcp-servers corpus. Tune together
@@ -39,7 +39,7 @@ def _encode_query(model: SentenceTransformer, text: str) -> list[float]:
         return model.encode([text])[0].tolist()
 
     print(
-        f"[mcpilot] Query is {len(tokens)} tokens (limit: {chunk_size}); "
+        f"[kothar] Query is {len(tokens)} tokens (limit: {chunk_size}); "
         "chunking and mean-pooling for full coverage.",
         file=sys.stderr,
     )

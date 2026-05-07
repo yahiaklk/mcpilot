@@ -13,9 +13,9 @@ import numpy as np
 import pytest
 import duckdb
 
-import mcpilot.indexer as indexer_mod
-import mcpilot.search as search_mod
-from mcpilot.server import recommend_next, recommend_for_goal
+import kothar.indexer as indexer_mod
+import kothar.search as search_mod
+from kothar.server import recommend_next, recommend_for_goal
 
 
 # ---------------------------------------------------------------------------
@@ -61,7 +61,7 @@ def patch_db(monkeypatch, tmp_path):
 
     # Mark index as ready so _ensure_index() skips build_index
     monkeypatch.setattr(indexer_mod, "is_index_ready", lambda: True)
-    import mcpilot.server as server_mod
+    import kothar.server as server_mod
     monkeypatch.setattr(server_mod, "_index_initialized", True)
 
 

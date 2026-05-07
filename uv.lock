@@ -750,6 +750,36 @@ wheels = [
 ]
 
 [[package]]
+name = "kothar"
+version = "0.3.0"
+source = { editable = "." }
+dependencies = [
+    { name = "duckdb" },
+    { name = "fastmcp" },
+    { name = "requests" },
+    { name = "sentence-transformers" },
+    { name = "torch", version = "2.11.0", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform == 'darwin'" },
+    { name = "torch", version = "2.11.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform != 'darwin'" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "duckdb", specifier = ">=1.0" },
+    { name = "fastmcp", specifier = ">=3.2.0" },
+    { name = "requests", specifier = ">=2.33.0" },
+    { name = "sentence-transformers", specifier = ">=3.0" },
+    { name = "torch", index = "https://download.pytorch.org/whl/cpu" },
+]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest", specifier = ">=9.0.3" }]
+
+[[package]]
 name = "markdown-it-py"
 version = "4.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -848,36 +878,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/8b/eb/c0cfc62075dc6e1ec
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9c/46/f6b4ad632c67ef35209a66127e4bddc95759649dd595f71f13fba11bdf9a/mcp-1.27.0-py3-none-any.whl", hash = "sha256:5ce1fa81614958e267b21fb2aa34e0aea8e2c6ede60d52aba45fd47246b4d741", size = 215967, upload-time = "2026-04-02T14:48:07.24Z" },
 ]
-
-[[package]]
-name = "mcpilot"
-version = "0.2.0"
-source = { editable = "." }
-dependencies = [
-    { name = "duckdb" },
-    { name = "fastmcp" },
-    { name = "requests" },
-    { name = "sentence-transformers" },
-    { name = "torch", version = "2.11.0", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform == 'darwin'" },
-    { name = "torch", version = "2.11.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform != 'darwin'" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "pytest" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "duckdb", specifier = ">=1.0" },
-    { name = "fastmcp", specifier = ">=3.2.0" },
-    { name = "requests", specifier = ">=2.33.0" },
-    { name = "sentence-transformers", specifier = ">=3.0" },
-    { name = "torch", index = "https://download.pytorch.org/whl/cpu" },
-]
-
-[package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = ">=9.0.3" }]
 
 [[package]]
 name = "mdurl"

@@ -14,9 +14,9 @@ import os
 import pytest
 import duckdb
 
-import mcpilot.indexer as indexer_mod
+import kothar.indexer as indexer_mod
 
-from mcpilot.indexer import _extract_description, _load_local_registry, parse_readme
+from kothar.indexer import _extract_description, _load_local_registry, parse_readme
 
 
 # ---------------------------------------------------------------------------

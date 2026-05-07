@@ -16,9 +16,9 @@ import numpy as np
 import pytest
 import duckdb
 
-import mcpilot.indexer as indexer_mod
-import mcpilot.search as search_mod
-from mcpilot.search import _encode_query, find_similar, generate_rationale, lookup_by_name
+import kothar.indexer as indexer_mod
+import kothar.search as search_mod
+from kothar.search import _encode_query, find_similar, generate_rationale, lookup_by_name
 
 
 # ---------------------------------------------------------------------------

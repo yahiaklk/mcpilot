@@ -1,12 +1,12 @@
 [project]
-name = "mcpilot"
-version = "0.2.0"
-description = "Context-aware MCP server advisor — recommends the right MCP servers for your project and explains why."
+name = "kothar"
+version = "0.3.0"
+description = "Context-aware capability advisor — recommends MCP servers, skills, and tools for your goal."
 readme = "README.md"
 requires-python = ">=3.12"
 license = { file = "LICENSE" }
 authors = [{ name = "Yahia Khallouk", email = "yahia.khallouk@gmail.com" }]
-keywords = ["mcp", "model-context-protocol", "claude", "llm", "advisor", "semantic-search", "embeddings", "fastmcp"]
+keywords = ["mcp", "model-context-protocol", "claude", "llm", "advisor", "semantic-search", "embeddings", "fastmcp", "kothar"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -29,20 +29,20 @@ dependencies = [
 ]
 
 [project.scripts]
-mcpilot = "mcpilot.server:main"
+kothar = "kothar.server:main"
 
 [project.urls]
-Homepage = "https://github.com/yahiaklk/mcpilot"
-Repository = "https://github.com/yahiaklk/mcpilot"
-Issues = "https://github.com/yahiaklk/mcpilot/issues"
-Changelog = "https://github.com/yahiaklk/mcpilot/releases"
+Homepage = "https://github.com/yahiaklk/kothar"
+Repository = "https://github.com/yahiaklk/kothar"
+Issues = "https://github.com/yahiaklk/kothar/issues"
+Changelog = "https://github.com/yahiaklk/kothar/releases"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/mcpilot"]
+packages = ["src/kothar"]
 
 [dependency-groups]
 dev = ["pytest>=9.0.3"]

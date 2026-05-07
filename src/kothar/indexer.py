@@ -1,6 +1,6 @@
 """
 Parse awesome-mcp-servers README, embed descriptions, store in DuckDB.
-Run directly to (re)build the index: uv run python -m mcpilot.indexer
+Run directly to (re)build the index: uv run python -m kothar.indexer
 """
 
 import os
