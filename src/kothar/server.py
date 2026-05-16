@@ -10,9 +10,11 @@ Four tools:
 Run with: uv run python -m kothar.server
 """
 
+import os
 import re
 import sys
 import traceback
+from pathlib import Path
 
 from fastmcp import FastMCP
 
@@ -92,8 +94,15 @@ def recommend_next(
 
         context = new_context
         if session_file:
+            allowed = Path(os.environ.get("VAULT_PATH", "~/projects")).expanduser().resolve()
+            p = Path(session_file).resolve()
+            if not p.is_relative_to(allowed):
+                return (
+                    f"## Error\n\n"
+                    f"session_file must be under {allowed}"
+                )
             try:
-                with open(session_file) as f:
+                with open(p) as f:
                     session_content = f.read().strip()
                 if session_content:
                     context = f"{new_context}\n\n{session_content}"

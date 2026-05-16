@@ -74,7 +74,8 @@ class TestRecommendNextSessionFile:
         result = recommend_next(["github/github-mcp"], "add payments")
         assert "## What to add next" in result
 
-    def test_session_file_content_appended(self, tmp_path):
+    def test_session_file_content_appended(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("VAULT_PATH", str(tmp_path))
         sf = tmp_path / "session.md"
         sf.write_text("Add Redis caching layer")
 
@@ -92,7 +93,8 @@ class TestRecommendNextSessionFile:
         assert "payments integration" in captured_context[0]
         assert "Add Redis caching layer" in captured_context[0]
 
-    def test_session_file_empty_does_not_append(self, tmp_path):
+    def test_session_file_empty_does_not_append(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("VAULT_PATH", str(tmp_path))
         sf = tmp_path / "empty.md"
         sf.write_text("   \n")
 
@@ -108,12 +110,14 @@ class TestRecommendNextSessionFile:
 
         assert captured_context[0] == "payments integration"
 
-    def test_missing_session_file_returns_error(self, tmp_path):
+    def test_missing_session_file_returns_error(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("VAULT_PATH", str(tmp_path))
         result = recommend_next([], "context", session_file=str(tmp_path / "nonexistent.md"))
         assert "Error reading session file" in result
         assert "nonexistent" in result
 
-    def test_unreadable_session_file_returns_error(self, tmp_path):
+    def test_unreadable_session_file_returns_error(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("VAULT_PATH", str(tmp_path))
         sf = tmp_path / "locked.md"
         sf.write_text("content")
         sf.chmod(0o000)
@@ -127,12 +131,20 @@ class TestRecommendNextSessionFile:
         result = recommend_next([], "context", session_file=None)
         assert "## What to add next" in result
 
-    def test_new_context_shown_in_header_not_session_content(self, tmp_path):
+    def test_new_context_shown_in_header_not_session_content(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("VAULT_PATH", str(tmp_path))
         sf = tmp_path / "session.md"
         sf.write_text("secret session notes")
         result = recommend_next([], "original context", session_file=str(sf))
         assert "original context" in result
         assert "secret session notes" not in result.split("## What to add next")[1].split("**New context:**")[1].split("\n")[0]
+
+    def test_session_file_outside_vault_rejected(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("VAULT_PATH", str(tmp_path))
+        outside = tmp_path.parent / "outside.md"
+        result = recommend_next([], "context", session_file=str(outside))
+        assert "## Error" in result
+        assert "session_file must be under" in result
 
 
 # ---------------------------------------------------------------------------
