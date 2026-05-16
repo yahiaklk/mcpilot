@@ -9,9 +9,6 @@ Covers fixes from:
   local-registry  KOTHAR_LOCAL_REGISTRY env var
 """
 
-import os
-
-import pytest
 import duckdb
 
 import kothar.indexer as indexer_mod

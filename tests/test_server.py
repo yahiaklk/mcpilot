@@ -2,11 +2,10 @@
 Tests for server.py tool layer.
 
 Covers:
-  session-file-param  recommend_next reads session_file and appends to context
+  session-file-param  recommend_for_next_step reads session_file and appends to context
   recommend-for-goal  recommend_for_goal decomposes goal into sub-queries
 """
 
-import math
 from unittest.mock import MagicMock, patch
 
 import numpy as np
@@ -15,7 +14,7 @@ import duckdb
 
 import kothar.indexer as indexer_mod
 import kothar.search as search_mod
-from kothar.server import recommend_next, recommend_for_goal
+from kothar.server import recommend_for_next_step, recommend_for_goal
 
 
 # ---------------------------------------------------------------------------
@@ -66,12 +65,12 @@ def patch_db(monkeypatch, tmp_path):
 
 
 # ---------------------------------------------------------------------------
-# recommend_next — session_file parameter
+# recommend_for_next_step — session_file parameter
 # ---------------------------------------------------------------------------
 
 class TestRecommendNextSessionFile:
     def test_no_session_file_works_normally(self):
-        result = recommend_next(["github/github-mcp"], "add payments")
+        result = recommend_for_next_step(["github/github-mcp"], "add payments")
         assert "## What to add next" in result
 
     def test_session_file_content_appended(self, tmp_path, monkeypatch):
@@ -87,7 +86,7 @@ class TestRecommendNextSessionFile:
             return original_find(query, **kwargs)
 
         with patch.object(search_mod, "find_similar", side_effect=_spy_find):
-            recommend_next([], "payments integration", session_file=str(sf))
+            recommend_for_next_step([], "payments integration", session_file=str(sf))
 
         assert len(captured_context) == 1
         assert "payments integration" in captured_context[0]
@@ -106,13 +105,13 @@ class TestRecommendNextSessionFile:
             return original_find(query, **kwargs)
 
         with patch.object(search_mod, "find_similar", side_effect=_spy_find):
-            recommend_next([], "payments integration", session_file=str(sf))
+            recommend_for_next_step([], "payments integration", session_file=str(sf))
 
         assert captured_context[0] == "payments integration"
 
     def test_missing_session_file_returns_error(self, tmp_path, monkeypatch):
         monkeypatch.setenv("VAULT_PATH", str(tmp_path))
-        result = recommend_next([], "context", session_file=str(tmp_path / "nonexistent.md"))
+        result = recommend_for_next_step([], "context", session_file=str(tmp_path / "nonexistent.md"))
         assert "Error reading session file" in result
         assert "nonexistent" in result
 
@@ -122,27 +121,27 @@ class TestRecommendNextSessionFile:
         sf.write_text("content")
         sf.chmod(0o000)
         try:
-            result = recommend_next([], "context", session_file=str(sf))
+            result = recommend_for_next_step([], "context", session_file=str(sf))
             assert "Error reading session file" in result
         finally:
             sf.chmod(0o644)
 
     def test_session_file_none_is_default(self):
-        result = recommend_next([], "context", session_file=None)
+        result = recommend_for_next_step([], "context", session_file=None)
         assert "## What to add next" in result
 
     def test_new_context_shown_in_header_not_session_content(self, tmp_path, monkeypatch):
         monkeypatch.setenv("VAULT_PATH", str(tmp_path))
         sf = tmp_path / "session.md"
         sf.write_text("secret session notes")
-        result = recommend_next([], "original context", session_file=str(sf))
+        result = recommend_for_next_step([], "original context", session_file=str(sf))
         assert "original context" in result
         assert "secret session notes" not in result.split("## What to add next")[1].split("**New context:**")[1].split("\n")[0]
 
     def test_session_file_outside_vault_rejected(self, tmp_path, monkeypatch):
         monkeypatch.setenv("VAULT_PATH", str(tmp_path))
         outside = tmp_path.parent / "outside.md"
-        result = recommend_next([], "context", session_file=str(outside))
+        result = recommend_for_next_step([], "context", session_file=str(outside))
         assert "## Error" in result
         assert "session_file must be under" in result
 

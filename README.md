@@ -26,10 +26,10 @@ The second moment is more valuable. At project start, people can Google. Mid-pro
 recommend_for_project(description)
   → top MCP servers for your stack with rationale
 
-recommend_next(current_stack, new_context)
+recommend_for_next_step(current_stack, new_context)
   → what to add as your project evolves
 
-explain_why(server_name, project_description)
+explain_fit(server_name, project_description)
   → why a specific server fits your project
 ```
 
@@ -77,9 +77,9 @@ Once connected, ask your AI assistant:
 ```
 recommend_for_project("Python FastAPI backend with PostgreSQL and JWT auth")
 
-recommend_next("github,filesystem", "adding Stripe payments and PDF invoices")
+recommend_for_next_step("github,filesystem", "adding Stripe payments and PDF invoices")
 
-explain_why("postgres", "multi-tenant SaaS with row-level security")
+explain_fit("postgres", "multi-tenant SaaS with row-level security")
 ```
 
 ## How it works

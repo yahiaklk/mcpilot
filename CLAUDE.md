@@ -10,7 +10,7 @@ Context-aware capability advisor — recommends the right MCP servers, skills, a
 - No cloud infra — local only
 
 ## Project structure
-- `src/kothar/server.py` — FastMCP server: recommend_for_project, recommend_next, recommend_for_goal, explain_why
+- `src/kothar/server.py` — FastMCP server: recommend_for_project, recommend_for_next_step, recommend_for_goal, explain_fit
 - `src/kothar/indexer.py` — parses awesome-mcp-servers README, embeds, stores in DuckDB
 - `src/kothar/search.py` — semantic search + template-based rationale generation
 - `data/mcp_servers.db` — DuckDB index (gitignored, rebuilt on first run)
