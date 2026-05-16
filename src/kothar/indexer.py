@@ -93,7 +93,7 @@ def parse_readme(text: str) -> list[dict]:
 
 def _load_local_registry() -> list[dict]:
     """
-    Load private server entries from MCPILOT_LOCAL_REGISTRY env var (path to YAML).
+    Load private server entries from KOTHAR_LOCAL_REGISTRY env var (path to YAML).
     Returns [] silently if env var is unset, file is missing, or file is malformed.
 
     Expected YAML format:
@@ -103,7 +103,7 @@ def _load_local_registry() -> list[dict]:
             url: https://...      # optional
             category: Internal    # optional, defaults to "Local"
     """
-    registry_path = os.environ.get("MCPILOT_LOCAL_REGISTRY")
+    registry_path = os.environ.get("KOTHAR_LOCAL_REGISTRY")
     if not registry_path:
         return []
     path = Path(registry_path)

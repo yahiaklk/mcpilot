@@ -6,7 +6,7 @@ Covers fixes from:
   a68237b  _SECTION_RE restricted to ### only
   dd51e6c  strip HTML anchors from section headings, handle Glama badges
   v0.2.0   is_index_ready opens read-only connection (duckdb-lock fix)
-  local-registry  MCPILOT_LOCAL_REGISTRY env var
+  local-registry  KOTHAR_LOCAL_REGISTRY env var
 """
 
 import os
@@ -229,7 +229,7 @@ class TestIsIndexReady:
 
 
 # ---------------------------------------------------------------------------
-# _load_local_registry — MCPILOT_LOCAL_REGISTRY env var
+# _load_local_registry — KOTHAR_LOCAL_REGISTRY env var
 # ---------------------------------------------------------------------------
 
 class TestLoadLocalRegistry:
@@ -238,11 +238,11 @@ class TestLoadLocalRegistry:
         return str(path)
 
     def test_env_unset_returns_empty(self, monkeypatch):
-        monkeypatch.delenv("MCPILOT_LOCAL_REGISTRY", raising=False)
+        monkeypatch.delenv("KOTHAR_LOCAL_REGISTRY", raising=False)
         assert _load_local_registry() == []
 
     def test_env_set_to_missing_file_returns_empty(self, monkeypatch, tmp_path):
-        monkeypatch.setenv("MCPILOT_LOCAL_REGISTRY", str(tmp_path / "nonexistent.yaml"))
+        monkeypatch.setenv("KOTHAR_LOCAL_REGISTRY", str(tmp_path / "nonexistent.yaml"))
         assert _load_local_registry() == []
 
     def test_valid_yaml_returns_servers(self, monkeypatch, tmp_path):
@@ -253,7 +253,7 @@ servers:
     url: https://internal.example.com
     category: Internal
 """)
-        monkeypatch.setenv("MCPILOT_LOCAL_REGISTRY", p)
+        monkeypatch.setenv("KOTHAR_LOCAL_REGISTRY", p)
         result = _load_local_registry()
         assert len(result) == 1
         assert result[0]["name"] == "my-private-mcp"
@@ -267,7 +267,7 @@ servers:
   - name: no-url-server
     description: A server with no URL
 """)
-        monkeypatch.setenv("MCPILOT_LOCAL_REGISTRY", p)
+        monkeypatch.setenv("KOTHAR_LOCAL_REGISTRY", p)
         result = _load_local_registry()
         assert result[0]["url"] == ""
 
@@ -277,7 +277,7 @@ servers:
   - name: s
     description: d
 """)
-        monkeypatch.setenv("MCPILOT_LOCAL_REGISTRY", p)
+        monkeypatch.setenv("KOTHAR_LOCAL_REGISTRY", p)
         assert _load_local_registry()[0]["category"] == "Local"
 
     def test_entry_missing_name_skipped(self, monkeypatch, tmp_path):
@@ -287,7 +287,7 @@ servers:
   - name: valid
     description: valid entry
 """)
-        monkeypatch.setenv("MCPILOT_LOCAL_REGISTRY", p)
+        monkeypatch.setenv("KOTHAR_LOCAL_REGISTRY", p)
         result = _load_local_registry()
         assert len(result) == 1
         assert result[0]["name"] == "valid"
@@ -299,7 +299,7 @@ servers:
   - name: valid
     description: has a description
 """)
-        monkeypatch.setenv("MCPILOT_LOCAL_REGISTRY", p)
+        monkeypatch.setenv("KOTHAR_LOCAL_REGISTRY", p)
         result = _load_local_registry()
         assert len(result) == 1
         assert result[0]["name"] == "valid"
@@ -307,12 +307,12 @@ servers:
     def test_malformed_yaml_returns_empty(self, monkeypatch, tmp_path):
         p = tmp_path / "bad.yaml"
         p.write_text("{{{{invalid yaml")
-        monkeypatch.setenv("MCPILOT_LOCAL_REGISTRY", str(p))
+        monkeypatch.setenv("KOTHAR_LOCAL_REGISTRY", str(p))
         assert _load_local_registry() == []
 
     def test_non_dict_root_returns_empty(self, monkeypatch, tmp_path):
         p = self._write_yaml(tmp_path / "reg.yaml", "- just a list")
-        monkeypatch.setenv("MCPILOT_LOCAL_REGISTRY", p)
+        monkeypatch.setenv("KOTHAR_LOCAL_REGISTRY", p)
         assert _load_local_registry() == []
 
     def test_multiple_servers_all_returned(self, monkeypatch, tmp_path):
@@ -325,7 +325,7 @@ servers:
   - name: gamma
     description: Gamma server
 """)
-        monkeypatch.setenv("MCPILOT_LOCAL_REGISTRY", p)
+        monkeypatch.setenv("KOTHAR_LOCAL_REGISTRY", p)
         result = _load_local_registry()
         assert len(result) == 3
         assert [r["name"] for r in result] == ["alpha", "beta", "gamma"]
