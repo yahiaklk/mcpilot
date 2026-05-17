@@ -45,7 +45,7 @@ build-backend = "hatchling.build"
 packages = ["src/kothar"]
 
 [dependency-groups]
-dev = ["pytest>=9.0.3"]
+dev = ["pytest>=9.0.3", "ruff>=0.8.0"]
 
 # CPU-only torch — this project does CPU cosine similarity over ~2k vectors,
 # CUDA torch pulls in ~4GB of nvidia wheels for zero benefit.
