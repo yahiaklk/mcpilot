@@ -15,7 +15,7 @@ from sentence_transformers import SentenceTransformer
 
 # Pinned to a specific commit for reproducible indexing. To update: fetch the
 # current HEAD SHA from punkpeye/awesome-mcp-servers and update both values.
-README_SHA = "a56e86528faea42a80df60e29c0ab3d1203af09f"
+README_SHA = "a56e86528faea42a80df60e29c0ab3d1203af09f"  # pinned: 2026-05-17
 README_URL = f"https://raw.githubusercontent.com/punkpeye/awesome-mcp-servers/{README_SHA}/README.md"
 DB_PATH = Path(__file__).parent.parent.parent / "data" / "mcp_servers.db"
 MODEL_NAME = "all-MiniLM-L6-v2"
